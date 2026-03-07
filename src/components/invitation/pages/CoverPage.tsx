@@ -5,7 +5,6 @@ import { messages, type Message } from "../../../data/messages";
 
 export default function CoverPage() {
   const [message, setMessage] = useState<Message | null>(null);
-  const fallbackName = "";
   const fallbackContent = "2026.06.28 SUN 17:00\n영등포 더베르G 2층";
 
   useEffect(() => {
@@ -70,16 +69,6 @@ export default function CoverPage() {
           transition={{ duration: 1, delay: 0.6 }}
           className="pt-8"
         >
-          <p
-            className="text-black text-center inline-block"
-            style={{
-              fontSize: "0.9rem",
-              fontFamily: "'Noto Serif KR', serif",
-              fontWeight: 400,
-            }}
-          >
-            {message?.name ? `To. ${message.name}` : fallbackName || "\u00A0"}
-          </p>
           <div className="mt-2">
             {(message?.content ?? fallbackContent).split("\n").map((line, index) => (
               <p
