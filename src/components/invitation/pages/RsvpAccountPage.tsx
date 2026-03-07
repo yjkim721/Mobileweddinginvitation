@@ -30,7 +30,7 @@ export default function RsvpAccountPage() {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedIndex(label);
-      toast.success('계좌번호가 복사되었습니다');
+      toast.success('은행명과 계좌번호가 복사되었습니다', { duration: 2000 });
       setTimeout(() => setCopiedIndex(null), 2000);
     } catch (err) {
       toast.error('복사에 실패했습니다');
@@ -55,7 +55,7 @@ export default function RsvpAccountPage() {
         <Button
           size="sm"
           variant="ghost"
-          onClick={() => copyToClipboard(account.number.replace(/-/g, ''), key)}
+          onClick={() => copyToClipboard(`${account.bank} ${account.number}`, key)}
           className={`flex-shrink-0 h-7 w-7 p-0 transition-all rounded-full ${
             isCopied ? 'bg-gray-700 text-white' : 'hover:bg-gray-100'
           }`}

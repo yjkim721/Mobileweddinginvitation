@@ -2221,3 +2221,16 @@ p {
   syntax: "*";
   inherits: false
 }
+
+/* Sonner toast fade tuning */
+.toaster [data-sonner-toast] {
+  transition: transform 0.45s ease, opacity 0.55s ease, height 0.45s ease, box-shadow 0.2s !important;
+}
+
+.toaster [data-sonner-toast] > * {
+  transition: opacity 0.45s ease !important;
+}
+
+.toaster [data-sonner-toast][data-removed="true"][data-front="false"][data-swipe-out="false"][data-expanded="false"] {
+  transition: transform 0.55s ease, opacity 0.55s ease !important;
+}

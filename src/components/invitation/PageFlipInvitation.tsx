@@ -9,6 +9,7 @@ import TimelinePage from './pages/TimelinePage';
 import MapPage from './pages/MapPage';
 import RsvpAccountPage from './pages/RsvpAccountPage';
 import SharePage from './pages/SharePage';
+import { Toaster } from '../ui/sonner';
 
 const pages = [
   CoverPage,
@@ -194,6 +195,8 @@ export default function PageFlipInvitation() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      <Toaster position="top-center" />
     </div>
   );
 }
