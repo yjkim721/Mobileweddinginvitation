@@ -5,6 +5,8 @@ import { messages, type Message } from "../../../data/messages";
 
 export default function CoverPage() {
   const [message, setMessage] = useState<Message | null>(null);
+  const fallbackName = "";
+  const fallbackContent = "2026.06.28 SUN 17:00\n영등포 더베르G 2층";
 
   useEffect(() => {
     // URL 파라미터에서 name 가져오기
@@ -50,7 +52,7 @@ export default function CoverPage() {
           className="text-center pt-2 sm:pt-4"
         >
           <p
-            className="text-white tracking-widest"
+            className="text-black tracking-widest"
             style={{
               fontSize: "0.7rem",
               fontFamily: "'Noto Serif KR', serif",
@@ -69,36 +71,26 @@ export default function CoverPage() {
           className="pt-8"
         >
           <p
-            className="text-white text-left inline-block"
+            className="text-black text-center inline-block"
             style={{
               fontSize: "0.9rem",
               fontFamily: "'Noto Serif KR', serif",
               fontWeight: 400,
-              background: "rgba(0, 0, 0, 0.6)",
-              padding: "2px 8px",
-              boxDecorationBreak: "clone",
-              WebkitBoxDecorationBreak: "clone",
             }}
           >
-            To. {message?.name || "소중한 분"}
+            {message?.name ? `To. ${message.name}` : fallbackName || "\u00A0"}
           </p>
           <div className="mt-2">
-            {message?.content.split("\n").map((line, index) => (
+            {(message?.content ?? fallbackContent).split("\n").map((line, index) => (
               <p
                 key={index}
-                className="text-white text-left inline-block"
+                className="text-black text-center inline-block"
                 style={{
                   fontSize: "0.85rem",
                   fontFamily: "'Noto Serif KR', serif",
                   fontWeight: 300,
-                  lineHeight: "1.6",
-                  background: line.trim()
-                    ? "rgba(0, 0, 0, 0.6)"
-                    : "transparent",
-                  padding: line.trim() ? "2px 8px" : "0",
+                  lineHeight: "2",
                   display: "block",
-                  boxDecorationBreak: "clone",
-                  WebkitBoxDecorationBreak: "clone",
                 }}
               >
                 {line || "\u00A0"}
