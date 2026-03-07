@@ -19,8 +19,8 @@ const GROOM_ACCOUNTS: Account[] = [
 
 const BRIDE_ACCOUNTS: Account[] = [
   { relation: '신부', bank: '국민', number: '814301-04-269506', holder: '김연재' },
-  { relation: '신부 아버지', bank: '기업', number: '657-023481-01-012', holder: '김능수' },
-  { relation: '신부 어머니', bank: '신한', number: '902-04-077257', holder: '송현주' },
+  { relation: '신부 아버지', bank: '신한', number: '902-04-077257', holder: '김능수' },
+  { relation: '신부 어머니', bank: '기업', number: '657-023481-01-012', holder: '송현주' },
 ];
 
 export default function RsvpAccountPage() {

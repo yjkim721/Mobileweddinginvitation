@@ -11,12 +11,13 @@ import seasonsImage1 from "figma:asset/1bba4b335eee38ee4c5ae4d5ae0333aeb50f3cfe.
 import seasonsImage2 from "figma:asset/65d4d87554a2c8e5288d6800f0f4b8685a8c74dc.png";
 import seasonsImage3 from "figma:asset/e766f0a370369f01612a95c0a0faa482a6bd909a.png";
 import seasonsImage4 from "figma:asset/8c279b6c07e3dad0e3cdeb2507d5a493e39cfe3b.png";
-import promiseImage from "figma:asset/4ebf3e5a53c6d0d7cdfe28744e5fc451ebe00e89.png";
-import weddingImage from "figma:asset/a79fe2beb1bf0fbd5f07e8cb57e7fd2eec847b42.png";
-import weddingImage2 from "figma:asset/9594e6957f1f69655c9602ced518eb3f409613cc.png";
-import weddingImage3 from "figma:asset/c7591955ea2ff597e4aa1caabd7da4649bb1c3a6.png";
-import weddingImage4 from "figma:asset/f811f1dca47e824ecb6a5f3b98366493eb78696f.png";
-import weddingImage5 from "figma:asset/0dccff24cc5fa481a4b6a82929f55e639abdc37e.png";
+import promiseImage1 from "../../../assets/promise_1.jpeg";
+import promiseImage2 from "../../../assets/promise_2.jpeg";
+import promiseImage3 from "../../../assets/promise_3.jpeg";
+import happyImage1 from "../../../assets/happy_1.jpeg";
+import happyImage2 from "../../../assets/happy_2.jpeg";
+import happyImage3 from "../../../assets/happy_3.jpeg";
+import happyImage4 from "../../../assets/happy_4.jpeg";
 
 interface TimelineImage {
   src: string;
@@ -81,9 +82,19 @@ const TIMELINE_EVENTS: TimelineEvent[] = [
     hasImage: true,
     images: [
       {
-        src: promiseImage,
+        src: promiseImage1,
         alt: "서약",
-        caption: "2025.01\n함께하자는 약속",
+        caption: "2025.01\n예쁜 예감이 들었다",
+      },
+      {
+        src: promiseImage2,
+        alt: "서약",
+        caption: "2025.01\n우리는 언제나",
+      },
+      {
+        src: promiseImage3,
+        alt: "서약",
+        caption: "2025.01\n손을 잡고 있게 될 것이다\n- 이이체 '연인'",
       },
     ],
   },
@@ -94,29 +105,24 @@ const TIMELINE_EVENTS: TimelineEvent[] = [
     hasImage: true,
     images: [
       {
-        src: weddingImage,
+        src: happyImage1,
         alt: "결혼식",
-        caption: "2026.06\n평생",
+        caption: "2026.06\n두사람의 앞에는 오직",
       },
       {
-        src: weddingImage2,
+        src: happyImage2,
         alt: "결혼식",
-        caption: "2026.06\n행",
+        caption: "2026.06\n하나의 인생만이 있으리라",
       },
       {
-        src: weddingImage3,
+        src: happyImage3,
         alt: "결혼식",
-        caption: "2026.06\n복",
+        caption: "2026.06\n이 대지 위에서 그대들은",
       },
       {
-        src: weddingImage4,
+        src: happyImage4,
         alt: "결혼식",
-        caption: "2026.06\n하",
-      },
-      {
-        src: weddingImage5,
-        alt: "결혼식",
-        caption: "2026.06\n자",
+        caption: "2026.06\n오랫동안 행복하리라\n- '아파치족 인디언들의 결혼 축시' 중에서",
       },
     ],
   },

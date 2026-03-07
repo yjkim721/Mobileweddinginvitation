@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
-import groomImage from 'figma:asset/073dda2382589992e0c751149cfb13dd00e41581.png';
-import brideImage from 'figma:asset/05ba32129dec69371938f0d89719cf181a3c049a.png';
+import groomImage from '../../../assets/intro_hu2.jpeg';
+import brideImage from '../../../assets/intro_yj.jpeg';
 
 export default function CouplePage() {
   return (
