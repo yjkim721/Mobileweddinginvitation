@@ -4,7 +4,9 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CoverPage from './pages/CoverPage';
 import MessagePage from './pages/MessagePage';
 import DatePage from './pages/DatePage';
-import CouplePage from './pages/CouplePage';
+import CouplePage, {
+  COUPLE_IMAGE_SOURCES,
+} from './pages/CouplePage';
 import TimelinePage, {
   TIMELINE_IMAGE_SOURCES,
   TIMELINE_PREVIEW_IMAGE_SOURCES,
@@ -30,15 +32,85 @@ export default function PageFlipInvitation() {
   const [direction, setDirection] = useState(0);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const hasPreloadedCoupleRef = useRef(false);
+  const hasPreloadedPreviewRef = useRef(false);
+  const hasPreloadedFullRef = useRef(false);
+
+  const preloadImages = (sources: string[]) => {
+    sources.forEach((src) => {
+      const image = new Image();
+      image.decoding = 'async';
+      image.src = src;
+    });
+  };
+
+  const scheduleLowPriority = (
+    task: () => void,
+    delayMs = 0,
+  ) => {
+    let idleId: number | null = null;
+    let timeoutId: number | null = null;
+
+    const run = () => {
+      if ('requestIdleCallback' in window) {
+        idleId = window.requestIdleCallback(
+          () => {
+            task();
+          },
+          { timeout: 1500 },
+        );
+        return;
+      }
+      timeoutId = window.setTimeout(task, 0);
+    };
+
+    if (delayMs > 0) {
+      timeoutId = window.setTimeout(run, delayMs);
+    } else {
+      run();
+    }
+
+    return () => {
+      if (
+        idleId !== null &&
+        'cancelIdleCallback' in window
+      ) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  };
 
   useEffect(() => {
-    const preloadImages = (sources: string[]) => {
-      sources.forEach((src) => {
-        const image = new Image();
-        image.decoding = 'async';
-        image.src = src;
-      });
-    };
+    // Keep cover page fast, then warm up the two "about us" photos.
+    if (currentPage < 1 || hasPreloadedCoupleRef.current) {
+      return;
+    }
+
+    hasPreloadedCoupleRef.current = true;
+    return scheduleLowPriority(() => {
+      preloadImages(COUPLE_IMAGE_SOURCES);
+    }, 300);
+  }, [currentPage]);
+
+  useEffect(() => {
+    // Keep first impression fast: never preload while cover page is visible.
+    if (currentPage < 2 || hasPreloadedPreviewRef.current) {
+      return;
+    }
+
+    hasPreloadedPreviewRef.current = true;
+    return scheduleLowPriority(() => {
+      preloadImages(TIMELINE_PREVIEW_IMAGE_SOURCES);
+    }, 400);
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (currentPage < 3 || hasPreloadedFullRef.current) {
+      return;
+    }
 
     const connection = (
       navigator as Navigator & {
@@ -54,25 +126,23 @@ export default function PageFlipInvitation() {
       connection?.effectiveType !== '2g' &&
       connection?.effectiveType !== 'slow-2g';
 
-    // Load representative photos first, then preload the full "our story" gallery.
-    const primaryImages = TIMELINE_PREVIEW_IMAGE_SOURCES;
-    const secondaryImages = TIMELINE_IMAGE_SOURCES.filter(
-      (src) => !primaryImages.includes(src),
-    );
-
-    preloadImages(primaryImages);
-    if (!shouldPreloadFullGallery || secondaryImages.length === 0) {
+    if (!shouldPreloadFullGallery) {
       return;
     }
 
-    const timeoutId = window.setTimeout(() => {
-      preloadImages(secondaryImages);
-    }, 1200);
+    const secondaryImages = TIMELINE_IMAGE_SOURCES.filter(
+      (src) =>
+        !TIMELINE_PREVIEW_IMAGE_SOURCES.includes(src),
+    );
+    if (secondaryImages.length === 0) {
+      return;
+    }
 
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, []);
+    hasPreloadedFullRef.current = true;
+    return scheduleLowPriority(() => {
+      preloadImages(secondaryImages);
+    }, 1000);
+  }, [currentPage]);
 
   const paginate = (newDirection: number) => {
     const nextPage = currentPage + newDirection;

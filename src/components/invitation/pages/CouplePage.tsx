@@ -2,6 +2,8 @@ import { motion } from 'motion/react';
 import groomImage from '../../../assets/intro_hu2.jpeg';
 import brideImage from '../../../assets/intro_yj.jpeg';
 
+export const COUPLE_IMAGE_SOURCES = [groomImage, brideImage];
+
 export default function CouplePage() {
   return (
     <div className="h-full flex flex-col items-center justify-center p-6 sm:p-8 md:p-10" style={{ background: '#fafaf8' }}>
