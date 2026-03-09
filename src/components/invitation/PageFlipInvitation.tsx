@@ -184,8 +184,8 @@ export default function PageFlipInvitation() {
 
   const variants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 50 : -50,
-      opacity: 0,
+      x: direction === 0 ? 0 : direction > 0 ? 50 : -50,
+      opacity: direction === 0 ? 1 : 0,
     }),
     center: {
       x: 0,
@@ -280,7 +280,7 @@ export default function PageFlipInvitation() {
       {/* Navigation buttons */}
       {/* Page content */}
       <div className="absolute inset-0 flex items-center justify-center p-4" onClick={handleClick}>
-        <AnimatePresence initial={false} custom={direction} mode="wait">
+        <AnimatePresence initial={true} custom={direction} mode="wait">
           <motion.div
             key={currentPage}
             custom={direction}

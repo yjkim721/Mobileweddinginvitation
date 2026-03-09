@@ -111,6 +111,24 @@ export default function CoverPage() {
           </div>
         </motion.div>
       </div>
+
+      {/* Veil reveal */}
+      <motion.div
+        aria-hidden="true"
+        initial={{ opacity: 0.56, y: 0 }}
+        animate={{ opacity: 0, y: -18 }}
+        transition={{
+          duration: 1.05,
+          delay: 0.02,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(140deg, rgba(255,255,255,0.54) 0%, rgba(248,242,234,0.42) 52%, rgba(255,255,255,0.3) 100%)",
+          zIndex: 20,
+        }}
+      />
     </div>
   );
 }
