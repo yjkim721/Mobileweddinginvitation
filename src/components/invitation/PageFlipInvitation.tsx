@@ -1,11 +1,14 @@
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CoverPage from './pages/CoverPage';
 import MessagePage from './pages/MessagePage';
 import DatePage from './pages/DatePage';
 import CouplePage from './pages/CouplePage';
-import TimelinePage from './pages/TimelinePage';
+import TimelinePage, {
+  TIMELINE_IMAGE_SOURCES,
+  TIMELINE_PREVIEW_IMAGE_SOURCES,
+} from './pages/TimelinePage';
 import MapPage from './pages/MapPage';
 import RsvpAccountPage from './pages/RsvpAccountPage';
 import SharePage from './pages/SharePage';
@@ -27,6 +30,49 @@ export default function PageFlipInvitation() {
   const [direction, setDirection] = useState(0);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const preloadImages = (sources: string[]) => {
+      sources.forEach((src) => {
+        const image = new Image();
+        image.decoding = 'async';
+        image.src = src;
+      });
+    };
+
+    const connection = (
+      navigator as Navigator & {
+        connection?: {
+          saveData?: boolean;
+          effectiveType?: string;
+        };
+      }
+    ).connection;
+
+    const shouldPreloadFullGallery =
+      !connection?.saveData &&
+      connection?.effectiveType !== '2g' &&
+      connection?.effectiveType !== 'slow-2g';
+
+    // Load representative photos first, then preload the full "our story" gallery.
+    const primaryImages = TIMELINE_PREVIEW_IMAGE_SOURCES;
+    const secondaryImages = TIMELINE_IMAGE_SOURCES.filter(
+      (src) => !primaryImages.includes(src),
+    );
+
+    preloadImages(primaryImages);
+    if (!shouldPreloadFullGallery || secondaryImages.length === 0) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      preloadImages(secondaryImages);
+    }, 1200);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, []);
 
   const paginate = (newDirection: number) => {
     const nextPage = currentPage + newDirection;

@@ -128,6 +128,14 @@ const TIMELINE_EVENTS: TimelineEvent[] = [
   },
 ];
 
+export const TIMELINE_IMAGE_SOURCES: string[] = TIMELINE_EVENTS.flatMap(
+  (event) => event.images?.map((image) => image.src) ?? [],
+);
+
+export const TIMELINE_PREVIEW_IMAGE_SOURCES: string[] = TIMELINE_EVENTS.map(
+  (event) => event.images?.[0]?.src,
+).filter((src): src is string => Boolean(src));
+
 interface TimelinePageProps {
   onImageOpenChange?: (isOpen: boolean) => void;
 }
