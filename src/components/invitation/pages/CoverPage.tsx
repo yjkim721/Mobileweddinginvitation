@@ -5,6 +5,7 @@ import { messages, type Message } from "../../../data/messages";
 
 export default function CoverPage() {
   const [message, setMessage] = useState<Message | null>(null);
+  const [isCoverLoaded, setIsCoverLoaded] = useState(false);
   const fallbackContent = "2026.06.28 SUN 17:00\n영등포 더베르G 2층";
 
   useEffect(() => {
@@ -30,14 +31,20 @@ export default function CoverPage() {
   return (
     <div
       className="h-full relative overflow-hidden"
-      style={{ background: "#000" }}
+      style={{ background: "#ddd8cf" }}
     >
       {/* Background image */}
       <div className="absolute inset-0">
         <img
           src={coverImage}
           alt="Wedding"
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover transition-opacity duration-500 ${
+            isCoverLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setIsCoverLoaded(true)}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
         />
       </div>
 
@@ -115,17 +122,21 @@ export default function CoverPage() {
       {/* Veil reveal */}
       <motion.div
         aria-hidden="true"
-        initial={{ opacity: 0.56, y: 0 }}
-        animate={{ opacity: 0, y: -18 }}
+        initial={false}
+        animate={
+          isCoverLoaded
+            ? { opacity: 0, y: -10 }
+            : { opacity: 0.14, y: 0 }
+        }
         transition={{
-          duration: 1.05,
+          duration: 0.9,
           delay: 0.02,
           ease: [0.22, 1, 0.36, 1],
         }}
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(140deg, rgba(255,255,255,0.54) 0%, rgba(248,242,234,0.42) 52%, rgba(255,255,255,0.3) 100%)",
+            "linear-gradient(140deg, rgba(244,240,232,0.42) 0%, rgba(236,230,221,0.32) 52%, rgba(244,240,232,0.22) 100%)",
           zIndex: 20,
         }}
       />
