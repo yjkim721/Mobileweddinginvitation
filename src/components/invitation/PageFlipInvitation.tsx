@@ -31,6 +31,8 @@ export default function PageFlipInvitation() {
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [hasPlayedInitialIntro, setHasPlayedInitialIntro] =
+    useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const hasPreloadedCoupleRef = useRef(false);
   const hasPreloadedPreviewRef = useRef(false);
@@ -82,6 +84,12 @@ export default function PageFlipInvitation() {
       }
     };
   };
+
+  useEffect(() => {
+    if (currentPage === 0 && !hasPlayedInitialIntro) {
+      setHasPlayedInitialIntro(true);
+    }
+  }, [currentPage, hasPlayedInitialIntro]);
 
   useEffect(() => {
     // Keep cover page fast, then warm up the two "about us" photos.
@@ -304,6 +312,10 @@ export default function PageFlipInvitation() {
             >
               {currentPage === 4 ? (
                 <TimelinePage onImageOpenChange={setIsImageModalOpen} />
+              ) : currentPage === 0 ? (
+                <CoverPage
+                  playInitialIntro={!hasPlayedInitialIntro}
+                />
               ) : (
                 <CurrentPageComponent />
               )}
