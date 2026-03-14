@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import coverImage from "figma:asset/f9f969ffed8b23afea2c99c0a530a3dcd4e1c658.png";
+import promiseImage3 from "../../../assets/promise_3.jpeg";
 import { useState, useEffect } from "react";
 import { messages, type Message } from "../../../data/messages";
 
@@ -7,6 +8,11 @@ export default function CoverPage() {
   const [message, setMessage] = useState<Message | null>(null);
   const [isCoverLoaded, setIsCoverLoaded] = useState(false);
   const fallbackContent = "2026.06.28 SUN 17:00\n영등포 더베르G 2층";
+  const selectedCoverImage =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("version") === "2"
+      ? promiseImage3
+      : coverImage;
 
   useEffect(() => {
     // URL 파라미터에서 name 가져오기
@@ -36,7 +42,7 @@ export default function CoverPage() {
       {/* Background image */}
       <div className="absolute inset-0">
         <img
-          src={coverImage}
+          src={selectedCoverImage}
           alt="Wedding"
           className={`w-full h-full object-cover transition-opacity duration-500 ${
             isCoverLoaded ? "opacity-100" : "opacity-0"
