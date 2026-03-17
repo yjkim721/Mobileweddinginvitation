@@ -51,7 +51,7 @@ export default function DatePage() {
               className="text-gray-700"
               style={{ fontSize: 'clamp(0.85rem, 2.4vw, 0.95rem)', fontFamily: "'Noto Serif KR', serif", fontWeight: 400 }}
             >
-              토요일 오후 다섯시
+              일요일 오후 다섯시
             </p>
           </div>
         </motion.div>
