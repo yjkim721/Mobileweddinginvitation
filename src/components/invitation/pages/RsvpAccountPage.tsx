@@ -149,7 +149,7 @@ export default function RsvpAccountPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
           className="flex items-center gap-3 mb-9"
-          style={{ marginBottom: '2rem' }}
+          style={{ marginBottom: '4.5rem' }}
         >
           <div className="flex-1">
             <p
@@ -196,7 +196,7 @@ export default function RsvpAccountPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
           className="mb-8"
-          style={{ marginBottom: '2.25rem' }}
+          style={{ marginBottom: '4.75rem' }}
         >
           <h3
             className="text-gray-500 mb-2"
@@ -223,7 +223,7 @@ export default function RsvpAccountPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
           className="mb-9"
-          style={{ marginBottom: '2.2rem' }}
+          style={{ marginBottom: '4.5rem' }}
         >
           <h3
             className="text-gray-500 mb-2"
