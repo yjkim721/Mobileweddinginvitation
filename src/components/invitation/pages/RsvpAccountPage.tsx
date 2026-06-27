@@ -114,7 +114,13 @@ export default function RsvpAccountPage() {
         className="max-w-md mx-auto w-full"
       >
         {/* Header */}
-        <div className="text-center mb-7" style={{ paddingTop: '1.05rem' }}>
+        <div
+          className="text-center mb-7"
+          style={{
+            paddingTop: '1.05rem',
+            marginBottom: '3.75rem',
+          }}
+        >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
