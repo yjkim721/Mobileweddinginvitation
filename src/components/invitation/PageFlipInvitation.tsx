@@ -15,7 +15,7 @@ import MapPage from './pages/MapPage';
 import RsvpAccountPage from './pages/RsvpAccountPage';
 import SharePage from './pages/SharePage';
 import { Toaster } from '../ui/sonner';
-import { isEnglishLanguage } from './language';
+import { useInvitationLanguage } from './language';
 
 const pages = [
   CoverPage,
@@ -29,7 +29,7 @@ const pages = [
 ];
 
 export default function PageFlipInvitation() {
-  const isEnglish = isEnglishLanguage();
+  const isEnglish = useInvitationLanguage();
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -321,6 +321,7 @@ export default function PageFlipInvitation() {
               ) : currentPage === 0 ? (
                 <CoverPage
                   playInitialIntro={!hasPlayedInitialIntro}
+                  onContinue={() => paginate(1)}
                 />
               ) : (
                 <CurrentPageComponent />

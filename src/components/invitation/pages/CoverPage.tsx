@@ -5,7 +5,10 @@ import { createPortal } from 'react-dom';
 import coverImage from '../../../assets/cover2.jpg';
 import promiseImage3 from '../../../assets/promise_3.jpeg';
 import { messages } from '../../../data/messages';
-import { isEnglishLanguage } from '../language';
+import {
+  setInvitationLanguage,
+  useInvitationLanguage,
+} from '../language';
 
 const INTRO_MIN_DURATION_MS = 900;
 const INTRO_MAX_WAIT_MS = 1600;
@@ -49,6 +52,10 @@ const VENUE_GUIDE_ITEMS = [
     title: '결혼식 후 친구 단체 촬영은 생략합니다.',
     detail: '여유롭고 편안한 식사 시간이 되시길 바랍니다.',
   },
+  {
+    title: '드레스코드 안내',
+    detail: '흰색을 제외한 모든 색상 괜찮아요. 예쁘게 입고 와주세요.',
+  },
 ];
 const VENUE_GUIDE_ITEMS_EN = [
   {
@@ -88,10 +95,12 @@ const VENUE_GUIDE_ITEMS_EN = [
 
 type CoverPageProps = {
   playInitialIntro?: boolean;
+  onContinue?: () => void;
 };
 
 export default function CoverPage({
   playInitialIntro = false,
+  onContinue,
 }: CoverPageProps) {
   const searchParams =
     typeof window !== 'undefined'
@@ -99,7 +108,7 @@ export default function CoverPage({
       : null;
   const nameParam = searchParams?.get('name');
   const versionParam = searchParams?.get('version');
-  const isEnglish = isEnglishLanguage();
+  const isEnglish = useInvitationLanguage();
   const selectedCoverImage =
     versionParam === '2' ? promiseImage3 : coverImage;
   const personalizedMessage = nameParam
@@ -291,6 +300,73 @@ export default function CoverPage({
 
       <div className="relative h-full flex flex-col p-6 sm:p-8 md:p-12">
         <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={
+            shouldRevealContent
+              ? { opacity: 1, y: 0 }
+              : { opacity: 0, y: -8 }
+          }
+          transition={{
+            duration: 0.75,
+            delay: shouldRevealContent ? 0.1 : 0,
+            ease: EASING,
+          }}
+          style={{
+            position: 'absolute',
+            top: '1.15rem',
+            right: '1.15rem',
+            zIndex: 5,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.1rem',
+            padding: '0.18rem',
+            borderRadius: '999px',
+            border: '1px solid rgba(255,255,255,0.58)',
+            background: 'rgba(0,0,0,0.25)',
+            backdropFilter: 'blur(10px)',
+            boxShadow:
+              '0 10px 28px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.12)',
+          }}
+          aria-label={isEnglish ? 'Language selector' : '언어 선택'}
+        >
+          {(['ko', 'eng'] as const).map((language) => {
+            const isActive =
+              language === 'eng' ? isEnglish : !isEnglish;
+
+            return (
+              <button
+                key={language}
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setInvitationLanguage(language);
+                }}
+                style={{
+                  minWidth: '2.05rem',
+                  height: '1.55rem',
+                  border: 0,
+                  borderRadius: '999px',
+                  background: isActive
+                    ? 'rgba(255,255,255,0.9)'
+                    : 'transparent',
+                  color: isActive
+                    ? 'rgba(30,30,30,0.9)'
+                    : 'rgba(255,255,255,0.86)',
+                  fontFamily: "'Noto Serif KR', serif",
+                  fontSize: '0.58rem',
+                  fontWeight: isActive ? 500 : 300,
+                  letterSpacing: '0.08em',
+                  lineHeight: 1,
+                }}
+                aria-pressed={isActive}
+              >
+                {language === 'eng' ? 'EN' : 'KR'}
+              </button>
+            );
+          })}
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={
             shouldRevealContent
@@ -406,17 +482,34 @@ export default function CoverPage({
           }}
           className="pb-4 text-center"
         >
-          <div className="inline-block px-4 py-2 bg-black/30 backdrop-blur-sm rounded-full">
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onContinue?.();
+            }}
+            className="inline-block px-4 py-2 bg-black/30 backdrop-blur-sm rounded-full"
+            style={{
+              border: 0,
+              cursor: 'pointer',
+            }}
+            aria-label={
+              isEnglish
+                ? 'Continue to the next page'
+                : '다음 페이지로 이동'
+            }
+          >
             <p
               className="text-white"
               style={{
                 fontSize: '0.9rem',
                 fontFamily: "'Noto Serif KR', serif",
+                margin: 0,
               }}
             >
               {isEnglish ? 'Tap to continue →' : '탭하여 넘겨주세요 →'}
             </p>
-          </div>
+          </button>
         </motion.div>
       </div>
 
