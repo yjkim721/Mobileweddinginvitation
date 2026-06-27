@@ -53,8 +53,9 @@ const VENUE_GUIDE_ITEMS = [
     detail: '여유롭고 편안한 식사 시간이 되시길 바랍니다.',
   },
   {
-    title: '드레스코드 안내',
-    detail: '흰색을 제외한 모든 색상 괜찮아요. 예쁘게 입고 와주세요.',
+    title: '드레스코드',
+    detail:
+      '화이트 계열만 살짝 피해서 자유롭게 입고 와주세요. 가장 편안하고 예쁜 모습으로 만나요!',
   },
 ];
 const VENUE_GUIDE_ITEMS_EN = [
