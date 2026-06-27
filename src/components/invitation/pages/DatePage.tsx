@@ -1,6 +1,9 @@
 import { motion } from 'motion/react';
+import { isEnglishLanguage } from '../language';
 
 export default function DatePage() {
+  const isEnglish = isEnglishLanguage();
+
   return (
     <div className="h-full flex flex-col items-center justify-center p-6 sm:p-8 md:p-12" style={{ background: '#fafaf8' }}>
       <motion.div
@@ -51,7 +54,7 @@ export default function DatePage() {
               className="text-gray-700"
               style={{ fontSize: 'clamp(0.85rem, 2.4vw, 0.95rem)', fontFamily: "'Noto Serif KR', serif", fontWeight: 400 }}
             >
-              일요일 오후 다섯시
+              {isEnglish ? 'Sunday at 5:00 PM' : '일요일 오후 다섯시'}
             </p>
           </div>
         </motion.div>
@@ -68,14 +71,23 @@ export default function DatePage() {
               className="text-gray-800 mb-2 sm:mb-2.5 md:mb-3"
               style={{ fontSize: 'clamp(1rem, 2.8vw, 1.1rem)', fontFamily: "'Noto Serif KR', serif", fontWeight: 400, letterSpacing: '0.05em' }}
             >
-              더베르G
+              {isEnglish ? 'The Verge G' : '더베르G'}
             </p>
             <p 
               className="text-gray-500 leading-relaxed"
               style={{ fontSize: 'clamp(0.7rem, 2.1vw, 0.8rem)', fontFamily: "'Noto Serif KR', serif", fontWeight: 300 }}
             >
-              서울특별시 영등포구 국회대로 612<br />
-              코레일리테일빌딩 2층
+              {isEnglish ? (
+                <>
+                  2F, Korail Retail Building, 612 Gukhoe-daero<br />
+                  Yeongdeungpo-gu, Seoul
+                </>
+              ) : (
+                <>
+                  서울특별시 영등포구 국회대로 612<br />
+                  코레일리테일빌딩 2층
+                </>
+              )}
             </p>
           </div>
         </motion.div>
@@ -92,7 +104,7 @@ export default function DatePage() {
               GROOM
             </p>
             <p className="text-gray-800" style={{ fontSize: 'clamp(0.85rem, 2.4vw, 0.95rem)', fontFamily: "'Noto Serif KR', serif", fontWeight: 400 }}>
-              유현욱
+              {isEnglish ? 'Hyeonuk Ryu' : '유현욱'}
             </p>
           </div>
           
@@ -103,7 +115,7 @@ export default function DatePage() {
               BRIDE
             </p>
             <p className="text-gray-800" style={{ fontSize: 'clamp(0.85rem, 2.4vw, 0.95rem)', fontFamily: "'Noto Serif KR', serif", fontWeight: 400 }}>
-              김연재
+              {isEnglish ? 'Yeonjae Kim' : '김연재'}
             </p>
           </div>
         </motion.div>

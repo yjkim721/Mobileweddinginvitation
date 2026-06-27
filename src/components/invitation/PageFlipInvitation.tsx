@@ -15,6 +15,7 @@ import MapPage from './pages/MapPage';
 import RsvpAccountPage from './pages/RsvpAccountPage';
 import SharePage from './pages/SharePage';
 import { Toaster } from '../ui/sonner';
+import { isEnglishLanguage } from './language';
 
 const pages = [
   CoverPage,
@@ -28,6 +29,7 @@ const pages = [
 ];
 
 export default function PageFlipInvitation() {
+  const isEnglish = isEnglishLanguage();
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -226,7 +228,11 @@ export default function PageFlipInvitation() {
                 setCurrentPage(index);
               }}
               className="flex-1 py-4 px-0.5 -my-4 group cursor-pointer"
-              aria-label={`페이지 ${index + 1}로 이동`}
+              aria-label={
+                isEnglish
+                  ? `Go to page ${index + 1}`
+                  : `페이지 ${index + 1}로 이동`
+              }
             >
               {/* Actual progress bar */}
               <div className="h-1 bg-white/30 rounded-full overflow-hidden relative transition-all group-hover:h-1.5">

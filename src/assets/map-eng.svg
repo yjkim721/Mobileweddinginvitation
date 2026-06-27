@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 1024" role="img" aria-labelledby="title desc">
+  <title id="title">English wedding venue map</title>
+  <desc id="desc">Map to The Verde G with traffic directions, subway exits, and parking entrance.</desc>
+  <rect width="1536" height="1024" fill="#fff"/>
+  <g fill="none" stroke="#111" stroke-width="4" stroke-linecap="round">
+    <path d="M58 282H1456"/>
+    <path d="M55 864H1454"/>
+    <path d="M274 32L246 282V544"/>
+    <path d="M246 544V992"/>
+    <path d="M1009 34V990"/>
+    <path d="M1305 34V990"/>
+  </g>
+
+  <g fill="none" stroke="#c10d18" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M136 285H906"/>
+    <path d="M272 543V285"/>
+    <path d="M232 269L272 285L232 303"/>
+    <path d="M883 269L924 285L883 303"/>
+    <path d="M254 329L272 285L290 329"/>
+  </g>
+
+  <g fill="none" stroke="#173aa9" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M1229 284H1012"/>
+    <path d="M1010 674V285"/>
+    <path d="M1051 269L1012 285L1051 303"/>
+    <path d="M992 325L1010 369L1028 325"/>
+    <path d="M992 484L1010 440L1028 484"/>
+  </g>
+
+  <g fill="#111" font-family="Arial, Helvetica, sans-serif">
+    <text x="76" y="230" fill="#c10d18" font-size="28" font-weight="700">
+      <tspan x="76" dy="0">Main Traffic</tspan>
+      <tspan x="86" dy="30">Direction</tspan>
+    </text>
+    <text x="1066" y="240" fill="#173aa9" font-size="27" font-weight="700">
+      <tspan x="1066" dy="0">Secondary Traffic</tspan>
+      <tspan x="1110" dy="30">Direction</tspan>
+    </text>
+
+    <rect x="348" y="200" width="14" height="14"/>
+    <text x="374" y="203" font-size="27" font-weight="700">
+      <tspan x="374" dy="0">Dangsan Samsung</tspan>
+      <tspan x="374" dy="33">2nd Apartment</tspan>
+    </text>
+
+    <rect x="756" y="200" width="14" height="14"/>
+    <text x="784" y="203" font-size="27" font-weight="700">
+      <tspan x="784" dy="0">Bandoyu Bora</tspan>
+      <tspan x="784" dy="33">FELICE Apartment</tspan>
+    </text>
+
+    <text x="33" y="341" font-size="25" font-weight="700">
+      <tspan x="33" dy="0">Hyundai Department</tspan>
+      <tspan x="108" dy="32">Store</tspan>
+    </text>
+    <rect x="229" y="354" width="13" height="13"/>
+
+    <rect x="370" y="325" width="14" height="14"/>
+    <text x="397" y="340" font-size="26" font-weight="700">Tire Bank</text>
+
+    <text x="684" y="340" font-size="26" font-weight="700">
+      <tspan x="684" dy="0">Yeongdeungpo</tspan>
+      <tspan x="684" dy="32">Police Station</tspan>
+    </text>
+    <rect x="847" y="342" width="13" height="13"/>
+
+    <circle cx="943" cy="374" r="26" fill="none" stroke="#111" stroke-width="4"/>
+    <circle cx="943" cy="374" r="19"/>
+    <rect x="974" y="389" width="28" height="28" rx="5" fill="#173aa9"/>
+    <text x="982" y="411" fill="#fff" font-size="21" font-weight="700">P</text>
+
+    <text x="824" y="450" font-size="41" font-weight="800">THE VERDE G</text>
+    <text x="700" y="510" font-family="Georgia, 'Times New Roman', serif" font-size="44">THE VERDE G</text>
+    <text x="700" y="540" font-size="10" font-weight="700" letter-spacing="1.1">A GLIMPSE OF ETERNITY IN A GARDEN OF LIGHT</text>
+
+    <circle cx="301" cy="449" r="8"/>
+    <text x="321" y="458" font-size="27" font-weight="700">
+      <tspan x="321" dy="0">Yeongdeungpo-gu</tspan>
+      <tspan x="321" dy="34">Office Station</tspan>
+      <tspan x="321" dy="34">Exit 4</tspan>
+    </text>
+
+    <text x="58" y="554" font-size="26" font-weight="700">
+      <tspan x="58" dy="0">Yeongdeungpo</tspan>
+      <tspan x="58" dy="34">District Office</tspan>
+    </text>
+    <rect x="229" y="543" width="13" height="13"/>
+
+    <text x="295" y="673" font-size="26" font-weight="700">Seoul Bus</text>
+    <circle cx="325" cy="722" r="33" fill="#222"/>
+    <rect x="312" y="706" width="27" height="30" rx="4" fill="#fff"/>
+    <circle cx="317" cy="739" r="4" fill="#fff"/>
+    <circle cx="335" cy="739" r="4" fill="#fff"/>
+    <rect x="372" y="709" width="25" height="29" rx="4" fill="#173aa9"/>
+    <circle cx="376" cy="742" r="4" fill="#173aa9"/>
+    <circle cx="392" cy="742" r="4" fill="#173aa9"/>
+    <text x="410" y="735" fill="#173aa9" font-size="29" font-weight="700">Seoul Bus</text>
+    <circle cx="307" cy="788" r="8"/>
+    <text x="330" y="800" font-size="27" font-weight="700">
+      <tspan x="330" dy="0">Yeongdeungpo-gu Office Station</tspan>
+      <tspan x="330" dy="34">Exit 5</tspan>
+    </text>
+
+    <text x="1026" y="552" fill="#173aa9" font-size="28" font-weight="700">Parking Entrance</text>
+    <rect x="1031" y="632" width="14" height="14"/>
+    <text x="1058" y="677" font-size="27" font-weight="700">
+      <tspan x="1058" dy="0">Yeongdeungpo</tspan>
+      <tspan x="1058" dy="34">Gyeongnam</tspan>
+      <tspan x="1058" dy="34">AnerSville</tspan>
+    </text>
+
+    <text x="1339" y="799" font-size="27" font-weight="700">
+      <tspan x="1339" dy="0">Yeongdeungpo</tspan>
+      <tspan x="1339" dy="34">Market Station</tspan>
+    </text>
+  </g>
+
+  <g fill="#fff" stroke="#111" stroke-width="4">
+    <circle cx="273" cy="864" r="26"/>
+    <path d="M258 881L289 849" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="1305" cy="864" r="26"/>
+    <path d="M1290 881L1321 849" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  </g>
+</svg>

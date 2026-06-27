@@ -1,8 +1,11 @@
 import { AnimatePresence, motion } from 'motion/react';
+import { ScrollText, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import coverImage from 'figma:asset/f9f969ffed8b23afea2c99c0a530a3dcd4e1c658.png';
+import { createPortal } from 'react-dom';
+import coverImage from '../../../assets/cover2.jpg';
 import promiseImage3 from '../../../assets/promise_3.jpeg';
 import { messages } from '../../../data/messages';
+import { isEnglishLanguage } from '../language';
 
 const INTRO_MIN_DURATION_MS = 900;
 const INTRO_MAX_WAIT_MS = 1600;
@@ -10,8 +13,80 @@ const COVER_TRANSITION_DURATION_S = 0.62;
 const EASING = [0.22, 1, 0.36, 1] as const;
 const FALLBACK_CONTENT =
   '2026.06.28 SUN 17:00\n영등포 더베르G 2층';
+const FALLBACK_CONTENT_EN =
+  'JUNE 28, 2026 · 5:00 PM\nThe Verge G, Yeongdeungpo';
 const INTRO_NAMES = '유현욱 · 김연재';
+const INTRO_NAMES_EN = 'Hyeonuk Ryu · Yeonjae Kim';
 const INTRO_DATE = '2026.06.28 SUN 17:00';
+const KOREAN_TEXT_PATTERN = /[가-힣]/;
+const VENUE_GUIDE_ITEMS = [
+  {
+    title: '지하주차장 2시간 무료 이용 가능',
+    detail:
+      '주차등록: 웰컴드링크존 or 지하1층 연회장 입구\n추가요금: 10분당 500원',
+  },
+  {
+    title: 'ATM 안내',
+    detail: '2층 축의대 좌측 계단 앞에 있어요.',
+  },
+  {
+    title: '웰컴 드링크가 준비되어 있습니다.',
+    detail: '2층 홀 맞은편에서 자유롭게 즐겨주세요.',
+  },
+  {
+    title: '신부대기실 인사는 16:45까지 가능해요.',
+    detail: '홀 왼편 꽃길 끝에 위치해 있어요.',
+  },
+  {
+    title: '식사는 16:30~18:30에 가능해요.',
+    detail: '지하 1층 위치, 모든 엘리베이터 가능합니다.',
+  },
+  {
+    title: '연회장 내 모든 음료·주류 무제한',
+    detail: '예식장 서비스이오니 마음껏 드세요~',
+  },
+  {
+    title: '결혼식 후 친구 단체 촬영은 생략합니다.',
+    detail: '여유롭고 편안한 식사 시간이 되시길 바랍니다.',
+  },
+];
+const VENUE_GUIDE_ITEMS_EN = [
+  {
+    title: 'Parking',
+    detail:
+      'Enjoy 2 hours of complimentary parking in the underground lot. Please register your vehicle at the Welcome Drink Zone or at the entrance of the B1 Banquet Hall.\n(Additional time: ₩500 per 10 minutes)',
+  },
+  {
+    title: 'ATM',
+    detail:
+      'An ATM is located on the 2nd floor, just in front of the stairs to the left of the reception desk.',
+  },
+  {
+    title: 'Welcome Drinks',
+    detail:
+      'Please help yourself to complimentary welcome drinks! You can find them right across from the main hall on the 2nd floor.',
+  },
+  {
+    title: 'Greeting the Bride',
+    detail:
+      'The Bridal Room is open for greetings until 4:45 PM. You can find it at the end of the flower-lined walkway on the left side of the hall.',
+  },
+  {
+    title: 'Dining',
+    detail:
+      'Your meal will be served from 4:30 PM to 6:30 PM in the Banquet Hall on the B1 floor. You can use any elevator to get there.',
+  },
+  {
+    title: 'Unlimited Beverages',
+    detail:
+      "Enjoy unlimited alcoholic and non-alcoholic drinks in the Banquet Hall! This is a complimentary service from the venue, so please drink and enjoy to your heart's content.",
+  },
+  {
+    title: 'Photography',
+    detail:
+      'Please note that we will be skipping the traditional group photo for friends after the ceremony. We hope this gives you more time to relax and enjoy your meal!',
+  },
+];
 
 type CoverPageProps = {
   playInitialIntro?: boolean;
@@ -26,13 +101,21 @@ export default function CoverPage({
       : null;
   const nameParam = searchParams?.get('name');
   const versionParam = searchParams?.get('version');
+  const isEnglish = isEnglishLanguage();
   const selectedCoverImage =
     versionParam === '2' ? promiseImage3 : coverImage;
   const personalizedMessage = nameParam
     ? messages.find((entry) => entry.name === nameParam) ?? null
     : null;
+  const shouldUsePersonalizedMessage =
+    personalizedMessage &&
+    (!isEnglish ||
+      !KOREAN_TEXT_PATTERN.test(personalizedMessage.content));
   const coverLines = (
-    personalizedMessage?.content ?? FALLBACK_CONTENT
+    (shouldUsePersonalizedMessage
+      ? personalizedMessage.content
+      : null) ??
+    (isEnglish ? FALLBACK_CONTENT_EN : FALLBACK_CONTENT)
   ).split('\n');
 
   const [imageStatus, setImageStatus] = useState<
@@ -45,6 +128,7 @@ export default function CoverPage({
     useState(!playInitialIntro);
   const [hasReachedIntroTimeout, setHasReachedIntroTimeout] =
     useState(!playInitialIntro);
+  const [isVenueGuideOpen, setIsVenueGuideOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -130,6 +214,9 @@ export default function CoverPage({
   const isImageReady = imageStatus === 'loaded';
   const hasImageFailed = imageStatus === 'error';
   const shouldRevealContent = !showIntro;
+  const venueGuideItems = isEnglish
+    ? VENUE_GUIDE_ITEMS_EN
+    : VENUE_GUIDE_ITEMS;
 
   return (
     <div
@@ -267,6 +354,47 @@ export default function CoverPage({
         <div className="flex-1"></div>
 
         <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={
+            shouldRevealContent
+              ? { opacity: 1, y: 0 }
+              : { opacity: 0, y: 8 }
+          }
+          transition={{
+            duration: 0.75,
+            delay: shouldRevealContent ? 0.3 : 0,
+            ease: EASING,
+          }}
+          className="pb-4 text-center"
+        >
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setIsVenueGuideOpen(true);
+            }}
+            className="group inline-flex items-center gap-2 border border-white/50 bg-black/18 px-4 py-2 text-white shadow-sm backdrop-blur-md transition-all hover:border-white/70 hover:bg-black/24"
+            style={{
+              borderRadius: '999px',
+              fontFamily: "'Noto Serif KR', serif",
+              fontSize: '0.68rem',
+              letterSpacing: '0.18em',
+              boxShadow:
+                '0 10px 28px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.14)',
+            }}
+            aria-label={isEnglish ? 'Open venue guide' : '안내 보기'}
+          >
+            <ScrollText
+              aria-hidden="true"
+              size={14}
+              style={{ opacity: 0.82 }}
+              strokeWidth={1.4}
+            />
+            <span>VENUE GUIDE</span>
+          </button>
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={
             shouldRevealContent
@@ -288,7 +416,7 @@ export default function CoverPage({
                 fontFamily: "'Noto Serif KR', serif",
               }}
             >
-              탭하여 넘겨주세요 →
+              {isEnglish ? 'Tap to continue →' : '탭하여 넘겨주세요 →'}
             </p>
           </div>
         </motion.div>
@@ -396,7 +524,7 @@ export default function CoverPage({
                   letterSpacing: '0.08em',
                 }}
               >
-                {INTRO_NAMES}
+                {isEnglish ? INTRO_NAMES_EN : INTRO_NAMES}
               </motion.h1>
 
               <motion.p
@@ -446,12 +574,244 @@ export default function CoverPage({
                   fontWeight: 300,
                 }}
               >
-                초대장을 열고 있어요
+                {isEnglish
+                  ? 'Opening the invitation'
+                  : '초대장을 열고 있어요'}
               </motion.p>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {isVenueGuideOpen && (
+              <motion.div
+                key="venue-guide-modal"
+                style={{
+                  position: 'fixed',
+                  inset: 0,
+                  zIndex: 9999,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '2rem 1.25rem',
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.24, ease: EASING }}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setIsVenueGuideOpen(false);
+                }}
+                role="dialog"
+                aria-modal="true"
+                aria-label="Venue Guide"
+              >
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'rgba(23, 19, 14, 0.58)',
+                    backdropFilter: 'blur(12px)',
+                  }}
+                />
+
+                <motion.div
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                    maxWidth: '21.5rem',
+                    maxHeight: 'calc(100vh - 4rem)',
+                    overflowX: 'hidden',
+                    overflowY: 'auto',
+                    textAlign: 'center',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(120, 106, 82, 0.26)',
+                    background:
+                      'linear-gradient(180deg, #fffdf8 0%, #f7f1e7 100%)',
+                    boxShadow:
+                      '0 34px 80px rgba(0,0,0,0.34), inset 0 0 0 1px rgba(255,255,255,0.62)',
+                    fontFamily: "'Noto Serif KR', serif",
+                  }}
+                  initial={{ opacity: 0, y: 22, scale: 0.965 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 16, scale: 0.985 }}
+                  transition={{ duration: 0.34, ease: EASING }}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      pointerEvents: 'none',
+                      position: 'absolute',
+                      inset: '0.75rem',
+                      border: '1px solid rgba(120, 106, 82, 0.18)',
+                      borderRadius: '6px',
+                    }}
+                  />
+
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setIsVenueGuideOpen(false);
+                    }}
+                    style={{
+                      position: 'absolute',
+                      right: '1rem',
+                      top: '1rem',
+                      zIndex: 10,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '2rem',
+                      height: '2rem',
+                      border: 0,
+                      borderRadius: '999px',
+                      color: '#776f63',
+                      background: 'rgba(255,255,255,0.46)',
+                      boxShadow:
+                        'inset 0 0 0 1px rgba(120,106,82,0.13)',
+                    }}
+                    aria-label={
+                      isEnglish ? 'Close venue guide' : '안내 닫기'
+                    }
+                  >
+                    <X size={16} strokeWidth={1.4} />
+                  </button>
+
+                  <div
+                    style={{
+                      position: 'relative',
+                      padding: '2.1rem 1.75rem 1.35rem',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '4rem',
+                        height: '1px',
+                        margin: '0 auto 1.25rem',
+                        background: 'rgba(120,106,82,0.38)',
+                      }}
+                    />
+                    <p
+                      style={{
+                        color: '#9a9284',
+                        fontSize: '0.62rem',
+                        letterSpacing: '0.31em',
+                      }}
+                    >
+                      OUR WEDDING DAY
+                    </p>
+                    <p
+                      style={{
+                        marginTop: '0.5rem',
+                        color: '#3f3931',
+                        fontSize: isEnglish ? '0.9rem' : '1rem',
+                        fontWeight: 300,
+                        lineHeight: 1.55,
+                      }}
+                    >
+                      {isEnglish ? 'Please note.' : '알려드립니다.'}
+                    </p>
+                    <div
+                      style={{
+                        width: '4rem',
+                        height: '1px',
+                        margin: '1.25rem auto 0',
+                        background: 'rgba(120,106,82,0.22)',
+                      }}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      position: 'relative',
+                      padding: '0 1.5rem 1.85rem',
+                    }}
+                  >
+                    <div style={{ textAlign: 'left' }}>
+                      {venueGuideItems.map((item, index) => (
+                        <motion.div
+                          key={item.title}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            duration: 0.36,
+                            delay: 0.08 + index * 0.045,
+                            ease: EASING,
+                          }}
+                          style={{
+                            display: 'grid',
+                            gridTemplateColumns: isEnglish
+                              ? '2.95rem minmax(0, 1fr)'
+                              : '2.4rem minmax(0, 1fr)',
+                            columnGap: isEnglish ? '0.65rem' : '0.75rem',
+                            padding: isEnglish
+                              ? '0.78rem 0'
+                              : '0.82rem 0',
+                            borderTop:
+                              index === 0
+                                ? '1px solid rgba(120,106,82,0.18)'
+                                : 'none',
+                            borderBottom:
+                              '1px solid rgba(120,106,82,0.18)',
+                          }}
+                        >
+                          <div
+                            style={{
+                              textAlign: 'right',
+                              color: '#9b7a64',
+                              fontSize: '0.86rem',
+                              lineHeight: 1.45,
+                              fontWeight: 400,
+                            }}
+                          >
+                            {String(index + 1).padStart(2, '0')}
+                            {isEnglish ? ' |' : ''}
+                          </div>
+
+                          <div>
+                            <p
+                              style={{
+                                color: '#3f3931',
+                                margin: 0,
+                                fontSize: isEnglish ? '0.72rem' : '0.79rem',
+                                lineHeight: 1.5,
+                                fontWeight: 500,
+                                letterSpacing: 0,
+                              }}
+                            >
+                              {item.title}
+                            </p>
+                            <p
+                              style={{
+                                margin: '0.25rem 0 0',
+                                color: '#7f7669',
+                                fontSize: isEnglish ? '0.66rem' : '0.71rem',
+                                lineHeight: 1.55,
+                                fontWeight: 300,
+                                letterSpacing: 0,
+                                whiteSpace: 'pre-line',
+                              }}
+                            >
+                              {item.detail}
+                            </p>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
+        )}
     </div>
   );
 }

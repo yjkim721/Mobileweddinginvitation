@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Copy, Check, MessageSquareHeart } from 'lucide-react';
 import { Button } from '../../ui/button';
 import { toast } from 'sonner@2.0.3';
+import { isEnglishLanguage } from '../language';
 
 interface Account {
   relation: string;
@@ -23,17 +24,44 @@ const BRIDE_ACCOUNTS: Account[] = [
   { relation: '신부 어머니', bank: '기업', number: '657-023481-01-012', holder: '송현주' },
 ];
 
+const GROOM_ACCOUNTS_EN: Account[] = [
+  { relation: 'Groom', bank: 'KB', number: '785801-00-032530', holder: 'Hyeonuk Ryu' },
+  { relation: "Groom's father", bank: 'NH', number: '302-0073-4711-41', holder: 'Changyu Ryu' },
+  { relation: "Groom's mother", bank: 'NH', number: '499-02-010620', holder: 'Haeok Kim' },
+];
+
+const BRIDE_ACCOUNTS_EN: Account[] = [
+  { relation: 'Bride', bank: 'KB', number: '814301-04-269506', holder: 'Yeonjae Kim' },
+  { relation: "Bride's father", bank: 'SH', number: '902-04-077257', holder: 'Neungsoo Kim' },
+  { relation: "Bride's mother", bank: 'IBK', number: '657-023481-01-012', holder: 'Hyunju Song' },
+];
+
+const FONT_FAMILY = "'Noto Serif KR', serif";
+const EYEBROW_FONT_SIZE = 'clamp(0.6rem, 2vw, 0.7rem)';
+const SUBTITLE_FONT_SIZE = 'clamp(0.8rem, 2.3vw, 0.9rem)';
+const BODY_FONT_SIZE = 'clamp(0.76rem, 2.2vw, 0.85rem)';
+const ACCOUNT_FONT_SIZE = 'clamp(0.68rem, 2vw, 0.74rem)';
+const NOTE_FONT_SIZE = 'clamp(0.68rem, 2vw, 0.75rem)';
+
 export default function RsvpAccountPage() {
   const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
+  const isEnglish = isEnglishLanguage();
+  const groomAccounts = isEnglish ? GROOM_ACCOUNTS_EN : GROOM_ACCOUNTS;
+  const brideAccounts = isEnglish ? BRIDE_ACCOUNTS_EN : BRIDE_ACCOUNTS;
 
   const copyToClipboard = async (text: string, label: string) => {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedIndex(label);
-      toast.success('은행명과 계좌번호가 복사되었습니다', { duration: 2000 });
+      toast.success(
+        isEnglish
+          ? 'Bank name and account number copied'
+          : '은행명과 계좌번호가 복사되었습니다',
+        { duration: 2000 },
+      );
       setTimeout(() => setCopiedIndex(null), 2000);
     } catch (err) {
-      toast.error('복사에 실패했습니다');
+      toast.error(isEnglish ? 'Copy failed' : '복사에 실패했습니다');
     }
   };
 
@@ -48,7 +76,15 @@ export default function RsvpAccountPage() {
     return (
       <div className="flex items-center justify-between gap-3 py-2 border-b border-gray-200/40 last:border-0">
         <div className="flex-1 min-w-0">
-          <p className="text-xs text-gray-700" style={{ fontFamily: "'Noto Serif KR', serif" }}>
+          <p
+            className="text-gray-700 truncate whitespace-nowrap"
+            style={{
+              fontFamily: FONT_FAMILY,
+              fontSize: ACCOUNT_FONT_SIZE,
+              fontWeight: 300,
+              lineHeight: 1.6,
+            }}
+          >
             {account.holder} · {account.bank} · {account.number}
           </p>
         </div>
@@ -67,20 +103,23 @@ export default function RsvpAccountPage() {
   };
 
   return (
-    <div className="h-full overflow-y-auto p-8 pb-16" style={{ background: '#fafaf8' }}>
+    <div
+      className="h-full overflow-hidden"
+      style={{ background: '#fafaf8', padding: '2rem' }}
+    >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="max-w-md mx-auto"
+        className="max-w-md mx-auto w-full"
       >
         {/* Header */}
-        <div className="text-center mb-10 pt-4">
+        <div className="text-center mb-6">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '60px' }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="h-px bg-gray-400 mx-auto mb-6"
+            className="h-px bg-gray-400 mx-auto mb-4"
           />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -89,15 +128,23 @@ export default function RsvpAccountPage() {
           >
             <p
               className="text-gray-400 tracking-wider mb-2"
-              style={{ fontSize: '0.7rem', fontFamily: "'Noto Serif KR', serif", letterSpacing: '0.3em' }}
+              style={{
+                fontSize: EYEBROW_FONT_SIZE,
+                fontFamily: FONT_FAMILY,
+                letterSpacing: '0.3em',
+              }}
             >
               RSVP
             </p>
             <p
               className="text-gray-700"
-              style={{ fontSize: '0.9rem', fontFamily: "'Noto Serif KR', serif", fontWeight: 300 }}
+              style={{
+                fontSize: SUBTITLE_FONT_SIZE,
+                fontFamily: FONT_FAMILY,
+                fontWeight: 300,
+              }}
             >
-              마음 전하실 곳
+              {isEnglish ? 'Wishing Well' : '마음 전하실 곳'}
             </p>
           </motion.div>
         </div>
@@ -107,29 +154,44 @@ export default function RsvpAccountPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex items-center gap-4 mb-10"
+          className="flex items-center gap-3 mb-6"
         >
           <div className="flex-1">
             <p
               className="text-sm text-gray-600 leading-relaxed"
-              style={{ fontFamily: "'Noto Serif KR', serif", lineHeight: '1.8' }}
+              style={{
+                fontFamily: FONT_FAMILY,
+                fontSize: BODY_FONT_SIZE,
+                fontWeight: 300,
+                lineHeight: 1.8,
+              }}
             >
-              참석 여부와 함께<br />
-              따뜻한 축하 메시지를 남겨주세요
+              {isEnglish ? (
+                <>
+                  Please let us know if you can join us<br />
+                  and leave a warm message.
+                </>
+              ) : (
+                <>
+                  참석 여부와 함께<br />
+                  따뜻한 축하 메시지를 남겨주세요
+                </>
+              )}
             </p>
           </div>
           <Button
             onClick={handleRsvp}
-            className="flex-shrink-0 px-5 py-4 text-white shadow-sm"
+            className="flex-shrink-0 text-white shadow-sm"
             style={{
               background: '#6a6a6a',
-              fontFamily: "'Noto Serif KR', serif",
-              fontSize: '0.85rem',
+              fontFamily: FONT_FAMILY,
+              fontSize: 'clamp(0.76rem, 2.1vw, 0.85rem)',
               letterSpacing: '-0.01em',
+              padding: '0.75rem 1rem',
             }}
           >
             <MessageSquareHeart className="w-3.5 h-3.5 mr-1.5" />
-            남기기
+            {isEnglish ? 'RSVP' : '남기기'}
           </Button>
         </motion.div>
 
@@ -138,7 +200,7 @@ export default function RsvpAccountPage() {
           initial={{ width: 0 }}
           animate={{ width: '60px' }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="h-px bg-gray-300 mx-auto my-8"
+          className="h-px bg-gray-300 mx-auto my-5"
         />
 
         {/* Groom accounts */}
@@ -146,16 +208,22 @@ export default function RsvpAccountPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
-          className="mb-5"
+          className="mb-4"
         >
           <h3
-            className="text-xs text-gray-500 mb-2.5"
-            style={{ fontFamily: "'Noto Serif KR', serif", letterSpacing: '-0.01em' }}
+            className="text-gray-500 mb-2"
+            style={{
+              fontFamily: FONT_FAMILY,
+              fontSize: BODY_FONT_SIZE,
+              fontWeight: 300,
+              letterSpacing: '-0.01em',
+              lineHeight: 1.5,
+            }}
           >
-            신랑측
+            {isEnglish ? "Groom's Side" : '신랑측'}
           </h3>
-          <div className="bg-white/40 rounded-lg px-3 py-2">
-            {GROOM_ACCOUNTS.map((account, index) => (
+          <div className="bg-white/40 rounded-lg px-3 py-1.5">
+            {groomAccounts.map((account, index) => (
               <AccountCard key={index} account={account} side="groom" />
             ))}
           </div>
@@ -166,16 +234,22 @@ export default function RsvpAccountPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
-          className="mb-8"
+          className="mb-5"
         >
           <h3
-            className="text-xs text-gray-500 mb-2.5"
-            style={{ fontFamily: "'Noto Serif KR', serif", letterSpacing: '-0.01em' }}
+            className="text-gray-500 mb-2"
+            style={{
+              fontFamily: FONT_FAMILY,
+              fontSize: BODY_FONT_SIZE,
+              fontWeight: 300,
+              letterSpacing: '-0.01em',
+              lineHeight: 1.5,
+            }}
           >
-            신부측
+            {isEnglish ? "Bride's Side" : '신부측'}
           </h3>
-          <div className="bg-white/40 rounded-lg px-3 py-2">
-            {BRIDE_ACCOUNTS.map((account, index) => (
+          <div className="bg-white/40 rounded-lg px-3 py-1.5">
+            {brideAccounts.map((account, index) => (
               <AccountCard key={index} account={account} side="bride" />
             ))}
           </div>
@@ -190,10 +264,24 @@ export default function RsvpAccountPage() {
         >
           <p
             className="text-xs text-gray-500 leading-relaxed"
-            style={{ fontFamily: "'Noto Serif KR', serif", lineHeight: '1.8' }}
+            style={{
+              fontFamily: FONT_FAMILY,
+              fontSize: NOTE_FONT_SIZE,
+              fontWeight: 300,
+              lineHeight: 1.8,
+            }}
           >
-            참석이 어려우신 분들께서 보내주시는<br />
-            따뜻한 마음 감사히 받겠습니다
+            {isEnglish ? (
+              <>
+                For those who cannot attend,<br />
+                your warm wishes are deeply appreciated.
+              </>
+            ) : (
+              <>
+                참석이 어려우신 분들께서 보내주시는<br />
+                따뜻한 마음 감사히 받겠습니다
+              </>
+            )}
           </p>
         </motion.div>
       </motion.div>

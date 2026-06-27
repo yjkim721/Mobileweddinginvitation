@@ -1,8 +1,12 @@
 import { motion } from "motion/react";
 import { MapPin } from "lucide-react";
-import mapImage from "figma:asset/32ba213c9bd03b39a5a1f190995be2438abfb050.png";
+import mapImage from "../../../assets/map.jpeg";
+import mapImageEn from "../../../assets/map-eng.svg";
+import { isEnglishLanguage } from "../language";
 
 export default function MapPage() {
+  const isEnglish = isEnglishLanguage();
+  const selectedMapImage = isEnglish ? mapImageEn : mapImage;
   const address =
     "서울특별시 영등포구 국회대로 612 코레일유통빌딩 2층";
 
@@ -56,7 +60,7 @@ export default function MapPage() {
             className="text-gray-700 mt-2"
             style={{ fontSize: 'clamp(0.8rem, 2.3vw, 0.9rem)', fontFamily: "'Noto Serif KR', serif", fontWeight: 300 }}
           >
-            오시는 길
+            {isEnglish ? "Directions" : "오시는 길"}
           </p>
         </motion.div>
 
@@ -138,8 +142,8 @@ export default function MapPage() {
         >
           <div className="relative w-full rounded-lg overflow-hidden border border-gray-300">
             <img 
-              src={mapImage} 
-              alt="오시는 길 약도" 
+              src={selectedMapImage} 
+              alt={isEnglish ? "Wedding venue map" : "오시는 길 약도"} 
               className="w-full h-auto"
             />
           </div>
@@ -157,9 +161,19 @@ export default function MapPage() {
             className="text-gray-700"
             style={{ fontSize: "0.88rem", lineHeight: "1.7" }}
           >
-            서울시 영등포구 국회대로 612 코레일유통사옥 2층
-            <br />
-            더베르지
+            {isEnglish ? (
+              <>
+                2F, Korail Retail Building, 612 Gukhoe-daero
+                <br />
+                Yeongdeungpo-gu, Seoul · The Verge G
+              </>
+            ) : (
+              <>
+                서울시 영등포구 국회대로 612 코레일유통사옥 2층
+                <br />
+                더베르지
+              </>
+            )}
           </p>
         </motion.div>
 
@@ -181,7 +195,7 @@ export default function MapPage() {
                 letterSpacing: "0.02em",
               }}
             >
-              자가용 이용 시
+              {isEnglish ? "By Car" : "자가용 이용 시"}
             </h4>
             <div
               className="space-y-0.5 text-gray-500 text-left"
@@ -192,11 +206,17 @@ export default function MapPage() {
               }}
             >
               <div>
-                네비게이션{" "}
-                <span className="font-medium">[더베르G]</span>{" "}
-                검색
+                {isEnglish ? "Search " : "네비게이션 "}
+                <span className="font-medium">
+                  {isEnglish ? "[The Verge G]" : "[더베르G]"}
+                </span>{" "}
+                {isEnglish ? "in your navigation app" : "검색"}
               </div>
-              <div>국회대로 612 2층 / 당산동 3가 2-7</div>
+              <div>
+                {isEnglish
+                  ? "2F, 612 Gukhoe-daero / Dangsan-dong 3-ga 2-7"
+                  : "국회대로 612 2층 / 당산동 3가 2-7"}
+              </div>
             </div>
           </div>
 
@@ -210,7 +230,7 @@ export default function MapPage() {
                 letterSpacing: "0.02em",
               }}
             >
-              지하철 이용 시
+              {isEnglish ? "By Subway" : "지하철 이용 시"}
             </h4>
             <div
               className="text-gray-500 text-left"
@@ -221,8 +241,9 @@ export default function MapPage() {
               }}
             >
               <div>
-                2호선, 5호선 영등포구청역 4번 출구에서 566m
-                (도보 약 7분)
+                {isEnglish
+                  ? "566m from Yeongdeungpo-gu Office Station Exit 4, Lines 2 and 5 (about 7 minutes on foot)"
+                  : "2호선, 5호선 영등포구청역 4번 출구에서 566m (도보 약 7분)"}
               </div>
             </div>
           </div>
@@ -237,7 +258,7 @@ export default function MapPage() {
                 letterSpacing: "0.02em",
               }}
             >
-              셔틀버스 안내
+              {isEnglish ? "Shuttle Bus" : "셔틀버스 안내"}
             </h4>
             <div
               className="text-gray-500 text-left"
@@ -248,8 +269,9 @@ export default function MapPage() {
               }}
             >
               <div>
-                영등포구청역 5번 출구 우리은행 앞 ↔ 더베르G
-                주차장 입구 좌측
+                {isEnglish
+                  ? "From Woori Bank near Yeongdeungpo-gu Office Station Exit 5 to The Verge G, left side of the parking lot entrance"
+                  : "영등포구청역 5번 출구 우리은행 앞 ↔ 더베르G 주차장 입구 좌측"}
               </div>
             </div>
           </div>
@@ -269,7 +291,9 @@ export default function MapPage() {
               fontFamily: "'Noto Serif KR', serif",
             }}
           >
-            더베르G Tel. 02. 2088. 5272
+            {isEnglish
+              ? "The Verge G Tel. 02. 2088. 5272"
+              : "더베르G Tel. 02. 2088. 5272"}
           </p>
         </motion.div>
       </div>

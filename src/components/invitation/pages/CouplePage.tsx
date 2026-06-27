@@ -1,10 +1,13 @@
 import { motion } from 'motion/react';
 import groomImage from '../../../assets/intro_hu2.jpeg';
 import brideImage from '../../../assets/intro_yj.jpeg';
+import { isEnglishLanguage } from '../language';
 
 export const COUPLE_IMAGE_SOURCES = [groomImage, brideImage];
 
 export default function CouplePage() {
+  const isEnglish = isEnglishLanguage();
+
   return (
     <div className="h-full flex flex-col items-center justify-center p-6 sm:p-8 md:p-10" style={{ background: '#fafaf8' }}>
       <motion.div
@@ -38,7 +41,7 @@ export default function CouplePage() {
             className="text-gray-700 mt-2"
             style={{ fontSize: 'clamp(0.8rem, 2.3vw, 0.9rem)', fontFamily: "'Noto Serif KR', serif", fontWeight: 300 }}
           >
-            우리 소개
+            {isEnglish ? 'Meet the couple' : '우리 소개'}
           </p>
         </motion.div>
 
@@ -67,20 +70,34 @@ export default function CouplePage() {
             </p>
             <h3 
               className="text-gray-800 mb-4 sm:mb-5 md:mb-6"
-              style={{ fontSize: 'clamp(1.2rem, 4vw, 1.5rem)', fontFamily: "'Noto Serif KR', serif", fontWeight: 400, letterSpacing: '0.03em' }}
+              style={{
+                fontSize: isEnglish
+                  ? 'clamp(0.92rem, 3vw, 1.08rem)'
+                  : 'clamp(1.2rem, 4vw, 1.5rem)',
+                fontFamily: "'Noto Serif KR', serif",
+                fontWeight: 400,
+                letterSpacing: isEnglish ? '0.01em' : '0.03em',
+                whiteSpace: 'nowrap',
+              }}
             >
-              유현욱
+              {isEnglish ? 'Hyeonuk Ryu' : '유현욱'}
             </h3>
             
             <div className="space-y-1.5 sm:space-y-2 w-full" style={{ fontFamily: "'Noto Serif KR', serif" }}>
-              <p className="text-gray-600" style={{ fontSize: 'clamp(0.75rem, 2.2vw, 0.85rem)' }}>1994년 5월 출생</p>
-              <p className="text-gray-700" style={{ fontSize: 'clamp(0.75rem, 2.2vw, 0.85rem)' }}>ENFJ - 다정다감</p>
+              <p className="text-gray-600" style={{ fontSize: 'clamp(0.75rem, 2.2vw, 0.85rem)' }}>
+                {isEnglish ? 'Born in May 1994' : '1994년 5월 출생'}
+              </p>
+              <p className="text-gray-700" style={{ fontSize: 'clamp(0.75rem, 2.2vw, 0.85rem)' }}>
+                {isEnglish ? 'ENFJ - Affectionate' : 'ENFJ - 다정다감'}
+              </p>
               
               <div className="pt-2 sm:pt-2.5 md:pt-3 pb-1 sm:pb-1.5 md:pb-2">
                 <div className="w-12 sm:w-14 md:w-16 h-px bg-gray-300 mx-auto mb-2 sm:mb-2.5 md:mb-3" />
-                <p className="text-gray-400 mb-1.5 sm:mb-2" style={{ fontSize: 'clamp(0.55rem, 1.8vw, 0.65rem)', letterSpacing: '0.05em' }}>좋아하는것</p>
+                <p className="text-gray-400 mb-1.5 sm:mb-2" style={{ fontSize: 'clamp(0.55rem, 1.8vw, 0.65rem)', letterSpacing: '0.05em' }}>
+                  {isEnglish ? 'LIKES' : '좋아하는것'}
+                </p>
                 <p className="text-gray-500" style={{ fontSize: 'clamp(0.7rem, 2.1vw, 0.8rem)', lineHeight: '1.6' }}>
-                  F1 · 축구 · 연재
+                  {isEnglish ? 'F1 · Soccer · YJ' : 'F1 · 축구 · 연재'}
                 </p>
               </div>
             </div>
@@ -117,20 +134,34 @@ export default function CouplePage() {
             </p>
             <h3 
               className="text-gray-800 mb-4 sm:mb-5 md:mb-6"
-              style={{ fontSize: 'clamp(1.2rem, 4vw, 1.5rem)', fontFamily: "'Noto Serif KR', serif", fontWeight: 400, letterSpacing: '0.03em' }}
+              style={{
+                fontSize: isEnglish
+                  ? 'clamp(0.92rem, 3vw, 1.08rem)'
+                  : 'clamp(1.2rem, 4vw, 1.5rem)',
+                fontFamily: "'Noto Serif KR', serif",
+                fontWeight: 400,
+                letterSpacing: isEnglish ? '0.01em' : '0.03em',
+                whiteSpace: 'nowrap',
+              }}
             >
-              김연재
+              {isEnglish ? 'Yeonjae Kim' : '김연재'}
             </h3>
             
             <div className="space-y-1.5 sm:space-y-2 w-full" style={{ fontFamily: "'Noto Serif KR', serif" }}>
-              <p className="text-gray-600" style={{ fontSize: 'clamp(0.75rem, 2.2vw, 0.85rem)' }}>1996년 7월 출생</p>
-              <p className="text-gray-700" style={{ fontSize: 'clamp(0.75rem, 2.2vw, 0.85rem)' }}>INTJ - 용의주도</p>
+              <p className="text-gray-600" style={{ fontSize: 'clamp(0.75rem, 2.2vw, 0.85rem)' }}>
+                {isEnglish ? 'Born in July 1996' : '1996년 7월 출생'}
+              </p>
+              <p className="text-gray-700" style={{ fontSize: 'clamp(0.75rem, 2.2vw, 0.85rem)' }}>
+                {isEnglish ? 'INTJ - Meticulous' : 'INTJ - 용의주도'}
+              </p>
               
               <div className="pt-2 sm:pt-2.5 md:pt-3 pb-1 sm:pb-1.5 md:pb-2">
                 <div className="w-12 sm:w-14 md:w-16 h-px bg-gray-300 mx-auto mb-2 sm:mb-2.5 md:mb-3" />
-                <p className="text-gray-400 mb-1.5 sm:mb-2" style={{ fontSize: 'clamp(0.55rem, 1.8vw, 0.65rem)', letterSpacing: '0.05em' }}>좋아하는것</p>
+                <p className="text-gray-400 mb-1.5 sm:mb-2" style={{ fontSize: 'clamp(0.55rem, 1.8vw, 0.65rem)', letterSpacing: '0.05em' }}>
+                  {isEnglish ? 'LIKES' : '좋아하는것'}
+                </p>
                 <p className="text-gray-500" style={{ fontSize: 'clamp(0.7rem, 2.1vw, 0.8rem)', lineHeight: '1.6' }}>
-                  여행 · 산책 · 현욱
+                  {isEnglish ? 'Travel · Walks · HU' : '여행 · 산책 · 현욱'}
                 </p>
               </div>
             </div>

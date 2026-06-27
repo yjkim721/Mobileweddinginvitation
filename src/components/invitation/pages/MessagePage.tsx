@@ -1,6 +1,9 @@
 import { motion } from 'motion/react';
+import { isEnglishLanguage } from '../language';
 
 export default function MessagePage() {
+  const isEnglish = isEnglishLanguage();
+
   return (
     <div className="h-full flex flex-col items-center justify-center p-6 sm:p-8 md:p-10" style={{ background: '#fafaf8' }}>
       <motion.div
@@ -33,9 +36,18 @@ export default function MessagePage() {
             letterSpacing: '-0.02em',
           }}
         >
-          소나기 속에서 우산을 든 친구를 만난 행운처럼,<br />
-          서로라는 기적을 만나 평범한 일상이<br />
-          눈부시게 바뀌었습니다
+          {isEnglish ? (
+            <>
+              Like finding a friend with an umbrella in the rain,<br />
+              you brought a radiant light to my ordinary days.
+            </>
+          ) : (
+            <>
+              소나기 속에서 우산을 든 친구를 만난 행운처럼,<br />
+              서로라는 기적을 만나 평범한 일상이<br />
+              눈부시게 바뀌었습니다
+            </>
+          )}
         </motion.p>
 
         <motion.p
@@ -50,11 +62,22 @@ export default function MessagePage() {
             letterSpacing: '-0.02em',
           }}
         >
-          하나둘 쌓여간 작고 소중한 기적이<br />
-          행복을 가져다 준 지금,<br />
-          이제는 서로의 주인공이 되어<br />
-          시시콜콜한 일상마저도<br />
-          반짝이는 순간들로 채워가려합니다.
+          {isEnglish ? (
+            <>
+              The small, beautiful miracles<br />
+              we found along the way<br />
+              have brought us here together.<br />
+              We hope to fill our everyday lives with moments that shine.
+            </>
+          ) : (
+            <>
+              하나둘 쌓여간 작고 소중한 기적이<br />
+              행복을 가져다 준 지금,<br />
+              이제는 서로의 주인공이 되어<br />
+              시시콜콜한 일상마저도<br />
+              반짝이는 순간들로 채워가려합니다.
+            </>
+          )}
         </motion.p>
 
         <motion.p
@@ -69,8 +92,17 @@ export default function MessagePage() {
             letterSpacing: '-0.02em',
           }}
         >
-          이 설레는 시작에 소중한 여러분을 초대합니다.<br />
-          보내주시는 축복을 큰 기쁨으로 간직하겠습니다.
+          {isEnglish ? (
+            <>
+              We warmly invite you to our joyful beginning.<br />
+              Your blessing will mean the world to us.
+            </>
+          ) : (
+            <>
+              이 설레는 시작에 소중한 여러분을 초대합니다.<br />
+              보내주시는 축복을 큰 기쁨으로 간직하겠습니다.
+            </>
+          )}
         </motion.p>
 
         {/* Decorative element */}
@@ -100,7 +132,7 @@ export default function MessagePage() {
               letterSpacing: '0.1em',
             }}
           >
-            현욱·연재 드림
+            {isEnglish ? 'With love, Hyeonuk & Yeonjae' : '현욱·연재 드림'}
           </p>
         </motion.div>
       </motion.div>

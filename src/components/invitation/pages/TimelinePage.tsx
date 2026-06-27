@@ -18,6 +18,7 @@ import happyImage1 from "../../../assets/happy_1.jpeg";
 import happyImage2 from "../../../assets/happy_2.jpeg";
 import happyImage3 from "../../../assets/happy_3.jpeg";
 import happyImage4 from "../../../assets/happy_4.jpeg";
+import { isEnglishLanguage } from "../language";
 
 interface TimelineImage {
   src: string;
@@ -128,6 +129,101 @@ const TIMELINE_EVENTS: TimelineEvent[] = [
   },
 ];
 
+const TIMELINE_EVENTS_EN: TimelineEvent[] = [
+  {
+    date: "Sep. 2023",
+    title: "Meeting",
+    description: "A serendipitous start",
+    hasImage: true,
+    images: [
+      {
+        src: firstMeetingImage,
+        alt: "First meeting",
+        caption: "Sep. 2023\nOur first meeting at the theater",
+      },
+    ],
+  },
+  {
+    date: "2024",
+    title: "Seasons",
+    description: "Laughter blossomed",
+    hasImage: true,
+    images: [
+      {
+        src: seasonsImage1,
+        alt: "Our seasons - spring",
+        caption: "Spring 2024\nA day out in Jeju",
+      },
+      {
+        src: seasonsImage2,
+        alt: "Our seasons - summer",
+        caption: "Summer 2024\nFishing in Gangneung",
+      },
+      {
+        src: seasonsImage3,
+        alt: "Our seasons - autumn",
+        caption: "Autumn 2024\nAutumn leaves in Jeongseon",
+      },
+      {
+        src: seasonsImage4,
+        alt: "Our seasons - winter",
+        caption: "Winter 2024\nSnowboarding in Yongpyong",
+      },
+    ],
+  },
+  {
+    date: "Jan. 2025",
+    title: "Promises",
+    description: "Choosing to walk together",
+    hasImage: true,
+    images: [
+      {
+        src: promiseImage1,
+        alt: "Promise",
+        caption: "Jan. 2025\nA beautiful feeling began",
+      },
+      {
+        src: promiseImage2,
+        alt: "Promise",
+        caption: "Jan. 2025\nAlways, the two of us",
+      },
+      {
+        src: promiseImage3,
+        alt: "Promise",
+        caption: "Jan. 2025\nWe will keep holding hands",
+      },
+    ],
+  },
+  {
+    date: "Jun. 2026",
+    title: "Forever",
+    description: "To a lifetime of happiness",
+    hasImage: true,
+    images: [
+      {
+        src: happyImage1,
+        alt: "Wedding",
+        caption: "Jun. 2026\nAhead of us",
+      },
+      {
+        src: happyImage2,
+        alt: "Wedding",
+        caption: "Jun. 2026\nThere is only one life",
+      },
+      {
+        src: happyImage3,
+        alt: "Wedding",
+        caption: "Jun. 2026\nUpon this earth",
+      },
+      {
+        src: happyImage4,
+        alt: "Wedding",
+        caption: "Jun. 2026\nMay we be happy for a long, long time",
+      },
+    ],
+  },
+];
+
 export const TIMELINE_IMAGE_SOURCES: string[] = TIMELINE_EVENTS.flatMap(
   (event) => event.images?.map((image) => image.src) ?? [],
 );
@@ -143,6 +239,10 @@ interface TimelinePageProps {
 export default function TimelinePage({
   onImageOpenChange,
 }: TimelinePageProps) {
+  const isEnglish = isEnglishLanguage();
+  const timelineEvents = isEnglish
+    ? TIMELINE_EVENTS_EN
+    : TIMELINE_EVENTS;
   const [isOpen, setIsOpen] = useState(false);
   const [currentImages, setCurrentImages] = useState<
     TimelineImage[]
@@ -228,13 +328,15 @@ export default function TimelinePage({
               fontWeight: 300,
             }}
           >
-            우리가 함께 걸어온 시간
+            {isEnglish
+              ? 'Our Journey Together'
+              : '우리가 함께 걸어온 시간'}
           </motion.p>
         </div>
 
         {/* Timeline */}
         <div className="max-w-2xl mx-auto space-y-12 sm:space-y-14 md:space-y-16 pb-8 sm:pb-10 md:pb-12">
-          {TIMELINE_EVENTS.map((event, index) => (
+          {timelineEvents.map((event, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
@@ -281,15 +383,15 @@ export default function TimelinePage({
                       type: "spring",
                       stiffness: 200,
                     }}
-                    className={`w-2.5 h-2.5 rounded-full ${index === TIMELINE_EVENTS.length - 1 ? "bg-gray-700 ring-2 ring-gray-400 ring-offset-2" : "bg-gray-400"} relative z-10`}
+                    className={`w-2.5 h-2.5 rounded-full ${index === timelineEvents.length - 1 ? "bg-gray-700 ring-2 ring-gray-400 ring-offset-2" : "bg-gray-400"} relative z-10`}
                     style={{
                       boxShadow:
-                        index === TIMELINE_EVENTS.length - 1
+                        index === timelineEvents.length - 1
                           ? "0 0 12px rgba(106, 106, 106, 0.3)"
                           : "none",
                     }}
                   />
-                  {index < TIMELINE_EVENTS.length - 1 && (
+                  {index < timelineEvents.length - 1 && (
                     <motion.div
                       initial={{ height: 0 }}
                       animate={{ height: "100%" }}

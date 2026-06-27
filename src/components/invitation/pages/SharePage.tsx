@@ -23,7 +23,7 @@ export default function SharePage() {
           className="text-gray-600"
           style={{ 
             fontFamily: "'Noto Serif KR', serif", 
-            fontSize: 'clamp(0.9rem, 2.6vw, 1rem)',
+            fontSize: 'clamp(0.84rem, 2.4vw, 0.94rem)',
             lineHeight: '1.8',
             letterSpacing: '-0.01em'
           }}
