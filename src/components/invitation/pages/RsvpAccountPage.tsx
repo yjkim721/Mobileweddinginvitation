@@ -74,7 +74,7 @@ export default function RsvpAccountPage() {
     const isCopied = copiedIndex === key;
 
     return (
-      <div className="flex items-center justify-between gap-3 py-2 border-b border-gray-200/40 last:border-0">
+      <div className="flex items-center justify-between gap-3 py-1.5">
         <div className="flex-1 min-w-0">
           <p
             className="text-gray-700 truncate whitespace-nowrap"
@@ -114,13 +114,7 @@ export default function RsvpAccountPage() {
         className="max-w-md mx-auto w-full"
       >
         {/* Header */}
-        <div className="text-center mb-6">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: '60px' }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="h-px bg-gray-400 mx-auto mb-4"
-          />
+        <div className="text-center mb-7" style={{ paddingTop: '1.05rem' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -154,7 +148,8 @@ export default function RsvpAccountPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex items-center gap-3 mb-6"
+          className="flex items-center gap-3 mb-9"
+          style={{ marginBottom: '2rem' }}
         >
           <div className="flex-1">
             <p
@@ -195,20 +190,13 @@ export default function RsvpAccountPage() {
           </Button>
         </motion.div>
 
-        {/* Divider */}
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: '60px' }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="h-px bg-gray-300 mx-auto my-5"
-        />
-
         {/* Groom accounts */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
-          className="mb-4"
+          className="mb-8"
+          style={{ marginBottom: '2.25rem' }}
         >
           <h3
             className="text-gray-500 mb-2"
@@ -234,7 +222,8 @@ export default function RsvpAccountPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
-          className="mb-5"
+          className="mb-9"
+          style={{ marginBottom: '2.2rem' }}
         >
           <h3
             className="text-gray-500 mb-2"

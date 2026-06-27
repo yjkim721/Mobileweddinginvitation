@@ -54,37 +54,35 @@ const VENUE_GUIDE_ITEMS_EN = [
   {
     title: 'Parking',
     detail:
-      'Enjoy 2 hours of complimentary parking in the underground lot. Please register your vehicle at the Welcome Drink Zone or at the entrance of the B1 Banquet Hall.\n(Additional time: ₩500 per 10 minutes)',
+      '2 hours free in the underground lot. Register your vehicle at the Welcome Drink Zone or B1 Banquet Hall. (Extra time: ₩500 / 10 mins)',
   },
   {
     title: 'ATM',
-    detail:
-      'An ATM is located on the 2nd floor, just in front of the stairs to the left of the reception desk.',
+    detail: '2nd floor, by the stairs to the left of the reception desk.',
   },
   {
     title: 'Welcome Drinks',
-    detail:
-      'Please help yourself to complimentary welcome drinks! You can find them right across from the main hall on the 2nd floor.',
+    detail: '2nd floor, directly across from the main hall.',
   },
   {
     title: 'Greeting the Bride',
     detail:
-      'The Bridal Room is open for greetings until 4:45 PM. You can find it at the end of the flower-lined walkway on the left side of the hall.',
+      'Open until 4:45 PM. Located at the end of the flower walkway on the left side of the hall.',
   },
   {
     title: 'Dining',
     detail:
-      'Your meal will be served from 4:30 PM to 6:30 PM in the Banquet Hall on the B1 floor. You can use any elevator to get there.',
+      '4:30 PM - 6:30 PM in the B1 Banquet Hall (accessible via any elevator).',
   },
   {
     title: 'Unlimited Beverages',
     detail:
-      "Enjoy unlimited alcoholic and non-alcoholic drinks in the Banquet Hall! This is a complimentary service from the venue, so please drink and enjoy to your heart's content.",
+      'Enjoy complimentary, unlimited alcoholic and non-alcoholic drinks in the Banquet Hall.',
   },
   {
     title: 'Photography',
     detail:
-      'Please note that we will be skipping the traditional group photo for friends after the ceremony. We hope this gives you more time to relax and enjoy your meal!',
+      "We will skip the traditional friends' group photo after the ceremony so you can relax and enjoy your meal sooner!",
   },
 ];
 
@@ -662,26 +660,23 @@ export default function CoverPage({
                     }}
                     style={{
                       position: 'absolute',
-                      right: '1rem',
-                      top: '1rem',
+                      right: '1.15rem',
+                      top: '1.05rem',
                       zIndex: 10,
                       display: 'inline-flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      width: '2rem',
-                      height: '2rem',
+                      width: '1.8rem',
+                      height: '1.8rem',
                       border: 0,
-                      borderRadius: '999px',
-                      color: '#776f63',
-                      background: 'rgba(255,255,255,0.46)',
-                      boxShadow:
-                        'inset 0 0 0 1px rgba(120,106,82,0.13)',
+                      color: '#82776a',
+                      background: 'transparent',
                     }}
                     aria-label={
                       isEnglish ? 'Close venue guide' : '안내 닫기'
                     }
                   >
-                    <X size={16} strokeWidth={1.4} />
+                    <X size={15} strokeWidth={1.25} />
                   </button>
 
                   <div
