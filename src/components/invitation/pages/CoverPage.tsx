@@ -299,7 +299,12 @@ export default function CoverPage({
       </motion.div>
 
       <div className="relative h-full flex flex-col p-6 sm:p-8 md:p-12">
-        <motion.div
+        <motion.button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            setInvitationLanguage(isEnglish ? 'ko' : 'eng');
+          }}
           initial={{ opacity: 0, y: -8 }}
           animate={
             shouldRevealContent
@@ -324,27 +329,27 @@ export default function CoverPage({
             border: '1px solid rgba(255,255,255,0.58)',
             background: 'rgba(0,0,0,0.25)',
             backdropFilter: 'blur(10px)',
+            cursor: 'pointer',
             boxShadow:
               '0 10px 28px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.12)',
           }}
-          aria-label={isEnglish ? 'Language selector' : '언어 선택'}
+          aria-label={
+            isEnglish ? 'Switch language to Korean' : '영어로 전환'
+          }
         >
           {(['ko', 'eng'] as const).map((language) => {
             const isActive =
               language === 'eng' ? isEnglish : !isEnglish;
 
             return (
-              <button
+              <span
                 key={language}
-                type="button"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  setInvitationLanguage(language);
-                }}
                 style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   minWidth: '2.05rem',
                   height: '1.55rem',
-                  border: 0,
                   borderRadius: '999px',
                   background: isActive
                     ? 'rgba(255,255,255,0.9)'
@@ -358,13 +363,12 @@ export default function CoverPage({
                   letterSpacing: '0.08em',
                   lineHeight: 1,
                 }}
-                aria-pressed={isActive}
               >
                 {language === 'eng' ? 'EN' : 'KR'}
-              </button>
+              </span>
             );
           })}
-        </motion.div>
+        </motion.button>
 
         <motion.div
           initial={{ opacity: 0, y: -20 }}
