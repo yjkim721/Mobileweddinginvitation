@@ -809,7 +809,7 @@ export default function CoverPage({
                         lineHeight: 1.55,
                       }}
                     >
-                      {isEnglish ? 'Please note.' : '알려드립니다.'}
+                      {isEnglish ? 'Guest Guide' : '알려드립니다.'}
                     </p>
                     <div
                       style={{
